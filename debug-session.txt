@@ -1,0 +1,89 @@
+=>  21:	func main() {
+    22:		input, _ := antlr.NewFileStream("./test_calc.txt")
+    23:		lexer := parser.NewCalcLexer(input)
+    24:		tokens := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
+    25:		p := parser.NewCalcParser(tokens)
+...
+> main.main() ./main.go:28 (PC: 0x517e6f)
+    23:		lexer := parser.NewCalcLexer(input)
+    24:		tokens := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
+    25:		p := parser.NewCalcParser(tokens)
+    26:		s := p.Start_()
+    27:		v := &Visitor{}
+=>  28:		v.Visit(s)
+    29:	}
+> github.com/antlr4-go/antlr/v4.(*BaseParseTreeVisitor).Visit() /home/schmidh/go/pkg/mod/github.com/antlr4-go/antlr/v4@v4.13.0/tree.go:61 (PC: 0x4f788a)
+    56:
+    57:	type BaseParseTreeVisitor struct{}
+    58:
+    59:	var _ ParseTreeVisitor = &BaseParseTreeVisitor{}
+    60:
+=>  61:	func (v *BaseParseTreeVisitor) Visit(tree ParseTree) interface{}         { return tree.Accept(v) }
+    62:	func (v *BaseParseTreeVisitor) VisitChildren(_ RuleNode) interface{}     { return nil }
+    63:	func (v *BaseParseTreeVisitor) VisitTerminal(_ TerminalNode) interface{} { return nil }
+    64:	func (v *BaseParseTreeVisitor) VisitErrorNode(_ ErrorNode) interface{}   { return nil }
+> calc/parser.(*StartContext).Accept() ./parser/calc_parser.go:177 (PC: 0x50fd13)
+=> 177:	func (s *StartContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+   178:		switch t := visitor.(type) {
+   179:		case CalcVisitor:
+   180:			return t.VisitStart(s)
+   181:
+   182:		default:
+> calc/parser.(*StartContext).Accept() ./parser/calc_parser.go:178 (PC: 0x50fd38)
+   177:	func (s *StartContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+=> 178:		switch t := visitor.(type) {
+   179:		case CalcVisitor:
+   180:			return t.VisitStart(s)
+   181:
+   182:		default:
+   183:			return t.VisitChildren(s)
+> calc/parser.(*StartContext).Accept() ./parser/calc_parser.go:182 (PC: 0x50fdec)
+   177:	func (s *StartContext) Accept(visitor antlr.ParseTreeVisitor) interface{} {
+   178:		switch t := visitor.(type) {
+   179:		case CalcVisitor:
+   180:			return t.VisitStart(s)
+   181:
+=> 182:		default:
+   183:			return t.VisitChildren(s)
+   184:		}
+   185:	}
+> calc/parser.(*StartContext).Accept() ./parser/calc_parser.go:183 (PC: 0x50fe04)
+   178:		switch t := visitor.(type) {
+
+///////////////////////////////
+// Doesn't take this route !!!!
+///////////////////////////////
+
+   179:		case CalcVisitor:
+   180:			return t.VisitStart(s)
+   181:
+   182:		default:
+=> 183:			return t.VisitChildren(s)
+   184:		}
+   185:	}
+> github.com/antlr4-go/antlr/v4.(*BaseParseTreeVisitor).VisitChildren() /home/schmidh/go/pkg/mod/github.com/antlr4-go/antlr/v4@v4.13.0/tree.go:62 (PC: 0x4f7924)
+    61:	func (v *BaseParseTreeVisitor) Visit(tree ParseTree) interface{}         { return tree.Accept(v) }
+=>  62:	func (v *BaseParseTreeVisitor) VisitChildren(_ RuleNode) interface{}     { return nil }
+    63:	func (v *BaseParseTreeVisitor) VisitTerminal(_ TerminalNode) interface{} { return nil }
+    64:	func (v *BaseParseTreeVisitor) VisitErrorNode(_ ErrorNode) interface{}   { return nil }
+> calc/parser.(*StartContext).Accept() ./parser/calc_parser.go:183 (PC: 0x50fe1b)
+   178:		switch t := visitor.(type) {
+   179:		case CalcVisitor:
+   180:			return t.VisitStart(s)
+   181:
+   182:		default:
+=> 183:			return t.VisitChildren(s)
+   184:		}
+   185:	}
+> github.com/antlr4-go/antlr/v4.(*BaseParseTreeVisitor).Visit() /home/schmidh/go/pkg/mod/github.com/antlr4-go/antlr/v4@v4.13.0/tree.go:61 (PC: 0x4f78c2)
+=>  61:	func (v *BaseParseTreeVisitor) Visit(tree ParseTree) interface{}         { return tree.Accept(v) }
+    62:	func (v *BaseParseTreeVisitor) VisitChildren(_ RuleNode) interface{}     { return nil }
+    63:	func (v *BaseParseTreeVisitor) VisitTerminal(_ TerminalNode) interface{} { return nil }
+    64:	func (v *BaseParseTreeVisitor) VisitErrorNode(_ ErrorNode) interface{}   { return nil }
+> main.main() ./main.go:29 (PC: 0x517ecd)
+    24:		tokens := antlr.NewCommonTokenStream(lexer, antlr.TokenDefaultChannel)
+    25:		p := parser.NewCalcParser(tokens)
+    26:		s := p.Start_()
+    27:		v := &Visitor{}
+    28:		v.Visit(s)
+=>  29:	}
