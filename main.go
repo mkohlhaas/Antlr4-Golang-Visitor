@@ -11,14 +11,13 @@ type Visitor struct {
 	parser.BaseCalcVisitor
 }
 
-var _ parser.CalcVisitor = &Visitor{}
+func (v *Visitor) Visit(t antlr.ParseTree) any {
+	return t.Accept(v)
+}
 
-// /////////////////////////////////
-// THIS FUNCTION IS NEVER CALLED  //
-// /////////////////////////////////
-func (v *Visitor) VisitStart(ctx *parser.StartContext) interface{} {
+func (v *Visitor) VisitStart(ctx *parser.StartContext) any {
 	fmt.Println("StartContext")
-	return v.VisitChildren(ctx)
+	return nil
 }
 
 func main() {
